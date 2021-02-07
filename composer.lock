@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb1a6732ea7b6a7a56700b425a1689bc",
+    "content-hash": "95ec8bcb71489671ec3fe7676b51c1ab",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -1237,16 +1237,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.2",
+            "version": "9.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f661659747f2f87f9e72095bb207bceb0f151cb4"
+                "reference": "8e16c225d57c3d6808014df6b1dd7598d0a5bbbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f661659747f2f87f9e72095bb207bceb0f151cb4",
-                "reference": "f661659747f2f87f9e72095bb207bceb0f151cb4",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8e16c225d57c3d6808014df6b1dd7598d0a5bbbe",
+                "reference": "8e16c225d57c3d6808014df6b1dd7598d0a5bbbe",
                 "shasum": ""
             },
             "require": {
@@ -1332,7 +1332,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-02T14:45:58+00:00"
+            "time": "2020-12-04T05:05:53+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -2412,7 +2412,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6"
+        "php": ">=7.3"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"
