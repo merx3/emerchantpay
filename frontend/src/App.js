@@ -5,6 +5,8 @@ import LoginForm from "./components/Admin/Login/LoginForm";
 import AdminPostList from "./components/Admin/Post/List";
 import AdminPostEdit from "./components/Admin/Post/Edit";
 import ListPosts from "./components/ListPosts";
+import ViewPost from "./components/ViewPost";
+import PageNotFound from "./components/PageNotFound";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -13,9 +15,11 @@ function App() {
         <Router>
             <Switch>
                 <Route exact path='/' component={ListPosts} />
+                <Route path='/posts/:postId' component={ViewPost} />
                 <Route path='/admin/login' component={LoginForm} />
                 <Route exact path='/admin/posts' component={AdminPostList} />
                 <Route path='/admin/posts/:postId/edit' component={AdminPostEdit} />
+                <Route path="*" component={PageNotFound} />
             </Switch>
         </Router>
     </div>
