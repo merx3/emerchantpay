@@ -1,10 +1,11 @@
 import React from 'react';
+import { Navbar } from "react-bootstrap";
 
 function Header() {
     return(
-        <nav class="navbar navbar-dark bg-primary">
-            <h3 className="text-center text-white pt-5">Login form</h3>
-        </nav>
+        <Navbar bg="primary" variant="dark">
+            <Navbar.Brand>Admin Login</Navbar.Brand>
+        </Navbar>
     )
 }
 export default Header;
