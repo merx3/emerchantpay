@@ -10,7 +10,6 @@ class HashStrategy implements AuthStrategyInterface
 {
     const OPTION_COST = 'cost';
     const OPTION_ALGO = 'algo';
-    const OPTION_HASH = 'hash';
 
     private $defaultProtectOptions = [
         self::OPTION_COST => 10,

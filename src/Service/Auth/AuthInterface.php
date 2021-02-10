@@ -1,6 +1,6 @@
 <?php
 
-namespace EMerchantPay\Service;
+namespace EMerchantPay\Service\Auth;
 
 interface AuthInterface
 {

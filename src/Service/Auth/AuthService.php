@@ -1,6 +1,6 @@
 <?php
 
-namespace EMerchantPay\Service;
+namespace EMerchantPay\Service\Auth;
 
 use EMerchantPay\Service\Auth\Provider\CredentialsProviderInterface;
 use EMerchantPay\Service\Auth\Strategy\AuthStrategyInterface;
