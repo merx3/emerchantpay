@@ -4,8 +4,9 @@ namespace EMerchantPay\Service\Auth;
 
 use EMerchantPay\Service\Auth\Provider\CredentialsProviderInterface;
 use EMerchantPay\Service\Auth\Strategy\AuthStrategyInterface;
+use EMerchantPay\Service\ServiceInterface;
 
-class AuthService implements AuthInterface
+class AuthService implements AuthInterface, ServiceInterface
 {
     /**
      * @var CredentialsProviderInterface
@@ -21,6 +22,11 @@ class AuthService implements AuthInterface
     {
         $this->provider = $provider;
         $this->strategy = $strategy;
+    }
+
+    public static function getName(): string
+    {
+        return 'auth_service';
     }
 
     /**

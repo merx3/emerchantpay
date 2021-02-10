@@ -4,7 +4,6 @@ namespace EMerchantPay\Service\Auth\Strategy;
 
 use EMerchantPay\Service\Auth\Credential\CredentialsInterface;
 use EMerchantPay\Service\Auth\Credential\HashCredential;
-use http\Exception\InvalidArgumentException;
 
 class HashStrategy implements AuthStrategyInterface
 {

@@ -10,9 +10,9 @@ interface CredentialsProviderInterface
     /**
      * Return credentials for user
      *
-     * @param string $user
+     * @param string $username
      * @param AuthStrategyInterface $strategy
      * @return CredentialsInterface
      */
-    public function getCredentials(string $user, AuthStrategyInterface $strategy): CredentialsInterface;
+    public function getCredentials(string $username, AuthStrategyInterface $strategy): CredentialsInterface;
 }

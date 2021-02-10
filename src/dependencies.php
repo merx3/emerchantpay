@@ -1,5 +1,8 @@
 <?php
 
+use EMerchantPay\Service\Auth\AuthService;
+use EMerchantPay\Service\Auth\Provider\DBCredentialsProvider;
+use EMerchantPay\Service\Auth\Strategy\HashStrategy;
 use Slim\App;
 
 return function (App $app) {
@@ -21,13 +24,20 @@ return function (App $app) {
     };
 
     // Service factory for Eloquent ORM
-    $container['db'] = function ($container) {
+    $container['db'] = function ($c) {
         $capsule = new \Illuminate\Database\Capsule\Manager;
-        $capsule->addConnection($container['settings']['db']);
+        $capsule->addConnection($c['settings']['db']);
 
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
 
         return $capsule;
+    };
+
+    $container[AuthService::getName()] = function ($c) {
+        $provider = new DBCredentialsProvider();
+        $strategy = new HashStrategy();
+
+        return new AuthService($provider, $strategy);
     };
 };
