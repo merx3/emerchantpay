@@ -3,6 +3,7 @@
 use EMerchantPay\Service\Auth\AuthService;
 use EMerchantPay\Service\Auth\Provider\DBCredentialsProvider;
 use EMerchantPay\Service\Auth\Strategy\HashStrategy;
+use EMerchantPay\Service\Session\SessionService;
 use Slim\App;
 
 return function (App $app) {
@@ -39,5 +40,9 @@ return function (App $app) {
         $strategy = new HashStrategy();
 
         return new AuthService($provider, $strategy);
+    };
+
+    $container[SessionService::getName()] = function ($c) {
+        return new SessionService();
     };
 };
