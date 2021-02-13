@@ -25,13 +25,13 @@ return function (App $app) {
     };
 
     // Service factory for Eloquent ORM
-    $container['db'] = function ($c) {
-        $capsule = new \Illuminate\Database\Capsule\Manager;
-        $capsule->addConnection($c['settings']['db']);
+    $capsule = new \Illuminate\Database\Capsule\Manager;
+    $capsule->addConnection($container['settings']['db']);
 
-        $capsule->setAsGlobal();
-        $capsule->bootEloquent();
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
 
+    $container['db'] = function ($c) use ($capsule) {
         return $capsule;
     };
 

@@ -35,6 +35,9 @@ class AuthService implements AuthInterface, ServiceInterface
     public function validate(string $username, string $password): bool
     {
         $credentials = $this->provider->getCredentials($username, $this->strategy);
+        if (!$credentials) {
+            return false;
+        }
 
         return $this->strategy->checkPassword($password, $credentials);
     }

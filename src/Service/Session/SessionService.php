@@ -41,7 +41,7 @@ class SessionService implements ServiceInterface
     /**
      * @param $name
      */
-    public function delete($name)
+    public function unset($name)
     {
         unset($_SESSION[$name]);
     }

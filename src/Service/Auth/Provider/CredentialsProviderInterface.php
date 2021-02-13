@@ -14,5 +14,5 @@ interface CredentialsProviderInterface
      * @param AuthStrategyInterface $strategy
      * @return CredentialsInterface
      */
-    public function getCredentials(string $username, AuthStrategyInterface $strategy): CredentialsInterface;
+    public function getCredentials(string $username, AuthStrategyInterface $strategy): ?CredentialsInterface;
 }

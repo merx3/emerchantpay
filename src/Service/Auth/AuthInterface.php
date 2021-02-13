@@ -12,4 +12,5 @@ interface AuthInterface
      * @return bool
      */
     public function validate(string $username, string $password): bool;
+
 }

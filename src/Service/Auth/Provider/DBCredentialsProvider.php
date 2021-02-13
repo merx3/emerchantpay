@@ -24,11 +24,11 @@ class DBCredentialsProvider implements CredentialsProviderInterface
     /**
      * @inheritdoc
      */
-    public function getCredentials(string $username, AuthStrategyInterface $strategy): CredentialsInterface
+    public function getCredentials(string $username, AuthStrategyInterface $strategy): ?CredentialsInterface
     {
         $user = $this->repo->getByName($username);
 
-        return $this->buildCredentials($user, $strategy);
+        return $user ? $this->buildCredentials($user, $strategy) : null;
     }
 
     private function buildCredentials(User $user, AuthStrategyInterface $strategy)

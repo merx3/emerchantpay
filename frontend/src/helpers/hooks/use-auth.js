@@ -1,4 +1,5 @@
 import React, { useState, useContext, createContext } from "react";
+import { login } from "../api";
 
 const authContext = createContext(undefined);
 
@@ -23,13 +24,13 @@ export const useAuth = () => {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
 
-    const signin = (email, password) => {
-        setTimeout(() => {}, 1000);
-        setUser("user");
+    const signin = async (username, password) => {
+        await login(username, password);
+        setUser(username);
         return true;
     };
 
-    const signup = (email, password) => {
+    const signup = (username, password) => {
         // Not required for this task
         return true;
     };
