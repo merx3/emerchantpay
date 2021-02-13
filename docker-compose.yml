@@ -8,13 +8,14 @@ services:
     slim:
         build: .
         working_dir: /var/www
-        command: php -S 0.0.0.0:8080 -t public
         environment:
             docker: "true"
         ports:
-            - 8080:8080
+            - 8080:80
+            - 8443:443
         volumes:
-            - .:/var/www
+            - ./:/var/www/
+            - ./public:/var/www/html
             - logs:/var/www/logs
         depends_on:
           - mysql

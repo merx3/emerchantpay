@@ -1,5 +1,6 @@
-import React, { useState, useContext, createContext } from "react";
-import { login } from "../api";
+import React, { useContext, createContext } from "react";
+import { useLocalStorage } from "./use-local-storage";
+import { login, logout } from "../api";
 
 const authContext = createContext(undefined);
 
@@ -22,7 +23,7 @@ export const useAuth = () => {
 
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useLocalStorage ('user', null);
 
     const signin = async (username, password) => {
         await login(username, password);
@@ -35,9 +36,10 @@ function useProvideAuth() {
         return true;
     };
 
-    const signout = () => {
-        setTimeout(() => {}, 1000);
-        setUser(null);
+    const signout = async () => {
+        await logout()
+            .catch(e => { if (e.code !== 401) { throw e; } })
+            .finally(() => setUser(null));
         return true;
     };
 

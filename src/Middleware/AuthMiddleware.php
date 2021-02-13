@@ -19,16 +19,11 @@ abstract class AuthMiddleware
      * @var AuthService
      */
     private $authService;
-    /**
-     * @var null
-     */
-    private $container;
 
-    public function __construct($authService, $session, $container = null)
+    public function __construct($authService, $session)
     {
         $this->authService = $authService;
         $this->session = $session;
-        $this->container = $container;
     }
 
     /**
@@ -61,6 +56,7 @@ abstract class AuthMiddleware
     public function logout()
     {
         $this->session->unset(self::SESSION_LOGGED);
+        $this->session->unset(self::SESSION_LOGGED_USER);
     }
 
     /**

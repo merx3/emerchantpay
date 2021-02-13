@@ -9,6 +9,14 @@ class SessionService implements ServiceInterface
     public function __construct()
     {
         if (session_status() === PHP_SESSION_NONE) {
+            session_set_cookie_params([
+                'lifetime' => 60*60*24,
+                'path' => '/',
+                'domain' => $_SERVER['HTTP_HOST'],
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'none'
+            ]);
             session_start();
         }
     }

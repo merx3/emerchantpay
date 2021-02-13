@@ -14,6 +14,6 @@ return function (App $app) {
     $container['auth'] = function ($c) use ($container) {
         $authService = $container->get(AuthService::getName());
         $sessionService = $container->get(SessionService::getName());
-        return new HttpBasicAuthMiddleware($authService, $sessionService, $container);
+        return new HttpBasicAuthMiddleware($authService, $sessionService);
     };
 };

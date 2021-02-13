@@ -9,6 +9,10 @@ use Slim\App;
 return function (App $app) {
     $container = $app->getContainer();
 
+    $container[SessionService::getName()] = function ($c) {
+        return new SessionService();
+    };
+
     // view renderer
     $container['renderer'] = function ($c) {
         $settings = $c->get('settings')['renderer'];
@@ -40,9 +44,5 @@ return function (App $app) {
         $strategy = new HashStrategy();
 
         return new AuthService($provider, $strategy);
-    };
-
-    $container[SessionService::getName()] = function ($c) {
-        return new SessionService();
     };
 };
