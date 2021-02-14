@@ -11,7 +11,7 @@ class Post extends Model
     const COLUMN_IMAGE_LINK = 'image_link';
     const COLUMN_CONTENT = 'content';
 
-    protected $table = 'users';
+    protected $table = 'posts';
 
     protected $fillable = [
         self::COLUMN_TITLE,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, OverlayTrigger, Tooltip, Button, Badge, Image, Row, Container} from "react-bootstrap";
+import {Table, OverlayTrigger, Tooltip, Button, Badge, Image, Row, Col, Container} from "react-bootstrap";
 import {PUBLIC_URL} from "../../../constants";
 import PostsPaginator from "../../Posts/ListPostsPaginator";
 
@@ -11,7 +11,7 @@ function List() {
     );
 
     return(
-        <Container>
+        <Container fluid>
         <Row>
             <Table striped bordered hover>
                 <thead>

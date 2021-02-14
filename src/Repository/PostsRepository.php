@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PostsRepository implements RepositoryInterface
 {
-    public function all(): array
+    public function all()
     {
         return Post::all();
     }

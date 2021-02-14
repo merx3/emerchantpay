@@ -1,68 +1,79 @@
 import React from 'react';
 import PostsPaginator from "./ListPostsPaginator";
-import { Container, Row, Col, Image, Card } from "react-bootstrap";
+import { Container, Spinner, Row, Col, Image, Card } from "react-bootstrap";
 import { PUBLIC_URL } from "../../constants";
+import {getQueryParams} from "../../helpers/common";
+import {getPosts} from "../../helpers/api";
 
-function ListPosts() {
-    const imageContainerStyle = {
-        "height": "200px",
-        "margin-right": "-30px"
-    };
+class ListPosts extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { posts: undefined, pagesCount: 1 };
+    }
 
-    const imageStyle = {
-        "object-fit": "cover",
-        "width": "100%",
-        "height": "100%",
-    };
 
-    return(
-        <Container>
-            <Row className="my-4">
-                <Col xs={2} md={2} className="h-100 d-flex justify-content-right">
-                    {/*holder.js/171x180*/}
-                    <div style={imageContainerStyle}>
-                        <Image style={imageStyle} src={PUBLIC_URL + "/images/1.jpg"} thumbnail />
-                    </div>
-                    <Card.Link href="posts/1" className="stretched-link" />
-                </Col>
-                <Col xs={10} md={10} className="d-flex">
-                    <Card className="w-100 text-left">
-                        <Card.Body>
-                            <Card.Link href="posts/1">
-                                <Card.Title className="text-dark">Card title</Card.Title>
-                            </Card.Link>
-                            <Card.Text>
-                                This is a demo post to show how the blog post will look like. And this is the description part, that  will be shown on the posts listing. LOREM IPSUM TIME! Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. d convallis tristique sem. d convallis tristique sem. d convallis trsdf
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-            <Row className="my-4">
-                <Col xs={2} md={2} className="d-flex justify-content-right">
-                    {/*holder.js/171x180*/}
-                    <div style={imageContainerStyle}>
-                        <Image style={imageStyle} src={PUBLIC_URL + "/images/2.jpg"} thumbnail />
-                        <Card.Link href="posts/2" className="stretched-link" />
-                    </div>
-                </Col>
-                <Col xs={10} md={10} className="d-flex">
-                    <Card className="w-100 text-left">
-                        <Card.Body>
-                            <Card.Link href="posts/2">
-                                <Card.Title className="text-dark">Card title</Card.Title>
-                            </Card.Link>
-                            <Card.Text>
-                                This is
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-            <Row className="pt-4 justify-content-md-center">
-                <PostsPaginator pages={[1]} />
-            </Row>
-        </Container>
-    )
+    componentDidMount() {
+        const queryParams = getQueryParams();
+        const page = queryParams.page || 1;
+        const perPage = queryParams.perPage || 10;
+
+        getPosts(page, perPage)
+            .then(res => {
+                console.log(res)
+                this.setState({
+                    posts: res?.data?.posts || [],
+                    pagesCount: res?.data?.pagesCount
+                });
+            } );
+    }
+
+    render () {
+        const imageContainerStyle = {
+            height: "200px",
+            marginRight: "-30px"
+        };
+
+        const imageStyle = {
+            objectFit: "cover",
+            width: "100%",
+            height: "100%",
+        };
+        const { posts, pagesCount } = this.state;
+
+        return typeof posts === 'undefined'
+            ? ( <Spinner className="mt-4" animation="border"/>)
+            : (
+            <Container>
+                {posts.map((post, i) => {
+                    return (
+                        <Row key={post.id} className="my-4">
+                            <Col key={post.id} xs={2} md={2} className="h-100 d-flex justify-content-right">
+                                {/*holder.js/171x180*/}
+                                <div style={imageContainerStyle}>
+                                    <Image style={imageStyle} src={PUBLIC_URL + post.image_link} thumbnail/>
+                                </div>
+                                <Card.Link href={"posts/" + post.id} className="stretched-link"/>
+                            </Col>
+                            <Col xs={10} md={10} className="d-flex">
+                                <Card className="w-100 text-left">
+                                    <Card.Body>
+                                        <Card.Link href="posts/1">
+                                            <Card.Title className="text-dark">{post.title}</Card.Title>
+                                        </Card.Link>
+                                        <Card.Text>
+                                            {post.description}
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
+                    )
+                })}
+                <Row className="pt-4 justify-content-md-center">
+                    <PostsPaginator pagesCount={pagesCount}/>
+                </Row>
+            </Container>
+        )
+    }
 }
 export default ListPosts;

@@ -9,7 +9,7 @@ interface RepositoryInterface
     /**
      * @return Model[]
      */
-    public function all(): array;
+    public function all();
 
     /**
      * @param $id

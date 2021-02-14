@@ -5,7 +5,6 @@ const api = axios.create({
     baseURL: SECURE_API,
     timeout: 10000,
     withCredentials: true,
-    transformRequest: [data => JSON.stringify(data.data)],
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -28,4 +27,17 @@ export async function logout(username, password) {
     if (response.data.error) {
         throw new Error(response.data.error);
     }
+}
+
+export async function getPosts(page, perPage) {
+    return await api.get( '/posts', {
+        mode: "cors",
+        params: {page, perPage},
+    });
+}
+
+export async function getPost(postId) {
+    return await api.get( '/posts/' + postId, {
+        mode: "cors",
+    });
 }

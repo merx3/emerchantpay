@@ -28,6 +28,9 @@ function App() {
                     <RedirectProtected path='/admin/posts/:postId/edit'>
                         <AdminPostEdit />
                     </RedirectProtected>
+                    <RedirectProtected path='/admin/posts/create'>
+                        <AdminPostEdit />
+                    </RedirectProtected>
                     <Route path="*" component={PageNotFound} />
                 </Switch>
             </Router>

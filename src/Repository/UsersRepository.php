@@ -10,7 +10,7 @@ class UsersRepository implements RepositoryInterface
     /**
      * @inheritdoc
      */
-    public function all(): array
+    public function all()
     {
         return User::all();
     }

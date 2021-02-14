@@ -29,17 +29,34 @@ class PostsController
      */
     public function getPosts(Request $request, Response $response)
     {
-        /** @var LengthAwarePaginator $paginator */
         $perPage = $request->getQueryParam('perPage');
-        $paginator = $this->repository->all()
-            ->paginate($perPage);
+        $page = $request->getQueryParam('page');
+        $allPosts = $this->repository->all();
+        $pagePosts = $allPosts->forPage($page, $perPage)->toArray();
+        $pagesCount = max(ceil($allPosts->count() / $perPage), 1);
 
         return $response->withJson([
-            'items' => $paginator->currentPage(),
-            'pagesCount' => $paginator->lastPage(),
+            'posts' => array_values($pagePosts),
+            'pagesCount' => $pagesCount,
         ]);
     }
 
+    /**
+     * Return token after successful login
+     *
+     * @param Request $request
+     * @param Response $response
+     *
+     * @return Response
+     */
+    public function getPost(Request $request, Response $response)
+    {
+        $route = $request->getAttribute('route');
+        $postId = $route->getArgument('id');
+        $post = $this->repository->get($postId);
+
+        return $response->withJson($post->toArray());
+    }
 
     /**
      * @param int postId
