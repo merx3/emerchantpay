@@ -1,6 +1,7 @@
 <?php
 
 use EMerchantPay\Api\Controller\LoginController;
+use EMerchantPay\Api\Controller\PostsController;
 use Slim\App;
 
 return function (App $app) {
@@ -11,7 +12,9 @@ return function (App $app) {
         $app->group('/admin', function () use ($app) {
             $app->post('/login', LoginController::class . ':login')->setName('auth.logout');
             $app->post('/logout', LoginController::class . ':logout')->setName('auth.logout');
-        })->add($authMiddleware);;
+        })->add($authMiddleware);
+        $app->get('/posts', PostsController::class . ':getPosts')->setName('posts.for.page');
+        $app->get('/posts/{id}', PostsController::class . ':getPost')->setName('posts.view');
     });
 
     // handle 404 with CORS

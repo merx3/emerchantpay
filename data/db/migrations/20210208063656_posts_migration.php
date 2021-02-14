@@ -21,10 +21,11 @@ final class PostsMigration extends AbstractMigration
         // create the table
         $table = $this->table('posts');
         $table->addColumn('title','string')
+            ->addColumn('description','string', ['limit' => 512])
             ->addColumn('image_link','string')
             ->addColumn('content','text')
-            ->addColumn('created', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('updated', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
             ->create();
     }
 }

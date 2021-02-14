@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_URL } from "../constants";
+import { SECURE_API } from "../constants";
 
 const api = axios.create({
-    baseURL: API_URL,
+    baseURL: SECURE_API,
     timeout: 10000,
     withCredentials: true,
     transformRequest: [data => JSON.stringify(data.data)],

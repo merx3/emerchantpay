@@ -17,7 +17,7 @@ function LoginForm() {
         document.getElementById(elementId).classList.remove('d-none');
     }
 
-    const submitLogin = (e) => {
+    const submitLogin = async (e) => {
         e.preventDefault();
         if (waitingResponse) {
             return;
@@ -26,13 +26,14 @@ function LoginForm() {
         const password = e.target.password.value;
         waitingResponse = true;
         showElement("loadingLogin");
-        auth.signin(username, password)
-            .then(() => history.push('/admin/posts'))
-            .catch(e => {
-                showError(e?.response?.data?.error || e.message);
-                hideElement("loadingLogin");
-            })
-            .finally(() => waitingResponse = false);
+        try {
+            await auth.signin(username, password);
+            history.push('/admin/posts');
+        } catch (e) {
+            showError(e?.response?.data?.error || e.message);
+            hideElement("loadingLogin");
+        }
+        waitingResponse = false;
     };
 
     const showError = error => {

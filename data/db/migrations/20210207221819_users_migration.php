@@ -23,7 +23,7 @@ final class UsersMigration extends AbstractMigration
         $table->addColumn('username','string')
             ->addColumn('pass_hash','string')
             ->addColumn('is_admin','boolean')
-            ->addColumn('created', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
             ->create();
     }
 }
