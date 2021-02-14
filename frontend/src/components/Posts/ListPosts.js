@@ -11,20 +11,16 @@ class ListPosts extends React.Component {
         this.state = { posts: undefined, pagesCount: 1 };
     }
 
-
     componentDidMount() {
         const queryParams = getQueryParams();
         const page = queryParams.page || 1;
         const perPage = queryParams.perPage || 10;
 
         getPosts(page, perPage)
-            .then(res => {
-                console.log(res)
-                this.setState({
-                    posts: res?.data?.posts || [],
-                    pagesCount: res?.data?.pagesCount
-                });
-            } );
+            .then(res => this.setState({
+                posts: res?.data?.posts || [],
+                pagesCount: res?.data?.pagesCount
+            }));
     }
 
     render () {
