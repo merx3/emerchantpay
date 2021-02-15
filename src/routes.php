@@ -12,7 +12,7 @@ return function (App $app) {
         $app->group('/admin', function () use ($app) {
             $app->post('/login', LoginController::class . ':login')->setName('auth.logout');
             $app->post('/logout', LoginController::class . ':logout')->setName('auth.logout');
-            $app->post('/posts/{id}', PostsController::class . ':storePost')->setName('admin.posts.store');
+            $app->post('/posts', PostsController::class . ':storePost')->setName('admin.posts.store');
         })->add($authMiddleware);
         $app->get('/posts', PostsController::class . ':getPosts')->setName('posts.for.page');
         $app->get('/posts/{id}', PostsController::class . ':getPost')->setName('posts.view');

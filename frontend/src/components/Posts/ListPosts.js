@@ -53,7 +53,7 @@ class ListPosts extends React.Component {
                             <Col xs={10} md={10} className="d-flex">
                                 <Card className="w-100 text-left">
                                     <Card.Body>
-                                        <Card.Link href="posts/1">
+                                        <Card.Link href={"posts/" + post.id}>
                                             <Card.Title className="text-dark">{post.title}</Card.Title>
                                         </Card.Link>
                                         <Card.Text>

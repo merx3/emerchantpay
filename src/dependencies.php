@@ -3,6 +3,7 @@
 use EMerchantPay\Service\Auth\AuthService;
 use EMerchantPay\Service\Auth\Provider\DBCredentialsProvider;
 use EMerchantPay\Service\Auth\Strategy\HashStrategy;
+use EMerchantPay\Service\FileStoreService;
 use EMerchantPay\Service\Session\SessionService;
 use Slim\App;
 
@@ -44,5 +45,11 @@ return function (App $app) {
         $strategy = new HashStrategy();
 
         return new AuthService($provider, $strategy);
+    };
+
+    $container[FileStoreService::getName()] = function ($c) {
+        $filePath = __DIR__ . DIRECTORY_SEPARATOR . '../public/images';
+
+        return new FileStoreService($filePath);
     };
 };

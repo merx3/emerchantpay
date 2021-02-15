@@ -25,7 +25,7 @@ export default class Paginator extends React.Component {
 
         return(
             <Pagination >
-                <Pagination.First href='/' disabled={currentPage === 1}/>
+                <Pagination.First href={window.location.pathname} disabled={currentPage === 1}/>
                 <Pagination.Prev href={"?page=" + prevPage} disabled={currentPage === 1}/>
                 {pages.map(page => {
                     if (page === '...') {

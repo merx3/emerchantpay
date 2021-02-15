@@ -3,9 +3,11 @@
 namespace EMerchantPay\Api\Controller;
 
 use EMerchantPay\Repository\PostsRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use EMerchantPay\Service\FileStoreService;
+use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Http\UploadedFile;
 
 class PostsController
 {
@@ -14,8 +16,14 @@ class PostsController
      */
     private $repository;
 
-    public function __construct()
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
         $this->repository = new PostsRepository();
     }
 
@@ -59,11 +67,29 @@ class PostsController
     }
 
     /**
-     * @param int postId
-     * @param int $perPage
+     * Return token after successful login
+     *
+     * @param Request $request
+     * @param Response $response
+     *
+     * @return Response
      */
-    public function updatePost(int $postId, array $postData)
+    public function storePost(Request $request, Response $response)
     {
-        return $this->repository->store($postId, $postData);
+        $params = $request->getParsedBody();
+        $id = $params['id'] ?? false;
+        $files = $request->getUploadedFiles();
+        if (isset($files['image'])) {
+            $image = $files['image'];
+            /** @var FileStoreService $fileStore */
+            $fileStore = $this->container->get(FileStoreService::getName());
+            $path = $fileStore->save($image);
+            $imageLink = '/images/' . $path;
+            $params['image_link'] = $imageLink;
+        } elseif (!$id) {
+            throw new \InvalidArgumentException('Cannot create new post without an image');
+        }
+
+        return $response->withJson($this->repository->store($id, $params));
     }
 }

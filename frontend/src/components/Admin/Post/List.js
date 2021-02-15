@@ -36,7 +36,10 @@ class List extends React.Component {
         return typeof posts === 'undefined'
             ? ( <Spinner className="mt-4" animation="border"/>)
             : (
-            <Container fluid>
+            <Container>
+                <Row>
+                    <Button className="my-4" variant="primary" href="posts/create">Create new post</Button>
+                </Row>
                 <Row>
                     <Table striped bordered hover>
                         <thead>
@@ -52,15 +55,15 @@ class List extends React.Component {
                         </thead>
                         <tbody>
                         {posts.map((post, i) => {
-                           const postDescription = post.description.length > 180
-                               ? post.description.substring(0, 180) + '...'
+                           const postDescription = post.description.length > 140
+                               ? post.description.substring(0, 140) + '...'
                                : post.description;
                            const imageName = post.image_link.split('/').pop();
                            return (
-                               <tr>
+                               <tr key={post.id}>
                                 <td className="align-middle">{post.id}</td>
                                 <td className="align-middle">{post.title}</td>
-                                <td className="align-middle ">{postDescription}</td>
+                                <td className="w-50 align-middle">{postDescription}</td>
                                 <td className="align-middle">
                                     <OverlayTrigger
                                         placement="right"
@@ -70,10 +73,10 @@ class List extends React.Component {
                                         <Badge variant="info">{imageName}</Badge>
                                     </OverlayTrigger>
                                 </td>
-                                <td className="align-middle">{post.created_at}</td>
-                                <td className="align-middle">{post.updated_at}</td>
+                                <td className="align-middle">{post.created_at.split(' ').shift()}</td>
+                                <td className="align-middle">{post.updated_at.split(' ').shift()}</td>
                                 <td className="align-middle">
-                                    <Button href={"admin/posts/" + post.id + "/edit"} variant="outline-primary">
+                                    <Button href={"posts/" + post.id + "/edit"} variant="outline-primary">
                                         Edit
                                     </Button></td>
                             </tr>)

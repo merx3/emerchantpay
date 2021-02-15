@@ -19,11 +19,16 @@ class PostsRepository implements RepositoryInterface
 
     public function store($id, $data): bool
     {
-        $post = $this->get($id);
-        if (!$post) {
-            return false;
+        if ($id) {
+            $post = $this->get($id);
+            if (!$post) {
+                throw new \InvalidArgumentException("Post with id $id does not exist");
+            }
+        } else {
+            $post = new Post();
         }
         $post->fill($data);
+
         return $post->save();
     }
 

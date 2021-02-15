@@ -22,7 +22,7 @@ export async function login(username, password) {
 }
 
 export async function logout(username, password) {
-    const response = await api.post( 'admin/logout', {}, {withCredentials: true});
+    const response = await api.post( 'admin/logout', {}, { withCredentials: true });
 
     if (response.data.error) {
         throw new Error(response.data.error);
@@ -31,13 +31,23 @@ export async function logout(username, password) {
 
 export async function getPosts(page, perPage) {
     return await api.get( '/posts', {
-        mode: "cors",
         params: {page, perPage},
     });
 }
 
 export async function getPost(postId) {
-    return await api.get( '/posts/' + postId, {
-        mode: "cors",
+    return await api.get( '/posts/' + postId);
+}
+
+export async function savePost(data) {
+    const formData = new FormData();
+    for (const param in data) {
+        formData.append(param, data[param]);
+    }
+    return await api.post( 'admin/posts',  formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        withCredentials: true
     });
 }
