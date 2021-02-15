@@ -1,33 +1,21 @@
-# Slim Framework 3 Skeleton Application
+# EMerchantPay CRUD assignment
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 3 application. This application uses the latest Slim 3 with the PHP-View template renderer. It also uses the Monolog logger.
-
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+Simple blog implementation with React, Bootstrap 4 and Slim 3, running on docker and npm (separate backend service)
 
 ## Install the Application
 
-Run this command from the directory in which you want to install your new Slim Framework application.
+1. Go to root folder of project and run `composer install`.
 
-    php composer.phar create-project slim/slim-skeleton [my-app-name]
+2. Go to frontent/ directory and run `npm install`
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+3. Start up docker containers: `docker-compose up -d`
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writeable.
+4. *Run migrations and seeds `vendor/bin/phinx migrate && vendor/bin/phinx seed:run`
 
-To run the application in development, you can run these commands 
+6. Go to the backend page (https://127.0.0.1:8443) and allow requests to the insecure ssl server. (Note: you'll see a 404 page when requests are allowed)
 
-	cd [my-app-name]
-	php composer.phar start
-	
-Or you can use `docker-compose` to run the app with `docker`, so you can run these commands:
+5. Startup the frontend by going to frontend/ directory and running `npm start`. The frontend will open in default browser 
 
-         cd [my-app-name]
-	 docker-compose up -d
-After that, open `http://0.0.0.0:8080` in your browser.
+*Note: This creates an admin with username: admin, password: qwer1234
 
-Run this command in the application directory to run the test suite
-
-	php composer.phar test
-
-That's it! Now go build something cool.
+To run tests, just run `phpunit` or `./vendor/bin/phpunit`
