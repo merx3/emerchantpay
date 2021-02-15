@@ -51,3 +51,7 @@ export async function savePost(data) {
         withCredentials: true
     });
 }
+
+export async function deletePost(postId) {
+    return await api.delete( '/admin/posts/' + postId);
+}

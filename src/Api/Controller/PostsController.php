@@ -92,4 +92,25 @@ class PostsController
 
         return $response->withJson($this->repository->store($id, $params));
     }
+
+    /**
+     * Return token after successful login
+     *
+     * @param Request $request
+     * @param Response $response
+     *
+     * @return Response
+     */
+    public function deletePost(Request $request, Response $response)
+    {
+        $route = $request->getAttribute('route');
+        $postId = $route->getArgument('id');
+        $post = $this->repository->get($postId);
+        /** @var FileStoreService $fileStore */
+        $fileStore = $this->container->get(FileStoreService::getName());
+        $fileStore->delete($post->getImageLink());
+        $this->repository->delete($postId);
+
+        return $response->withStatus(200);
+    }
 }

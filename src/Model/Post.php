@@ -19,4 +19,9 @@ class Post extends Model
         self::COLUMN_IMAGE_LINK,
         self::COLUMN_CONTENT,
     ];
+
+    public function getImageLink()
+    {
+        return $this->getAttributeValue(self::COLUMN_IMAGE_LINK);
+    }
 }

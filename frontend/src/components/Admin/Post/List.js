@@ -3,12 +3,12 @@ import {Table, OverlayTrigger, Tooltip, Button, Badge, Image, Row, Col, Containe
 import {PUBLIC_URL} from "../../../constants";
 import PostsPaginator from "../../Posts/ListPostsPaginator";
 import {getQueryParams} from "../../../helpers/common";
-import {getPosts} from "../../../helpers/api";
+import {getPosts, deletePost} from "../../../helpers/api";
 
 class List extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {posts: undefined, pagesCount: 1};
+        this.state = {posts: undefined, pagesCount: 1, deleteId: null};
     }
 
     componentDidMount() {
@@ -20,7 +20,8 @@ class List extends React.Component {
             .then(res => {
                 this.setState({
                     posts: res?.data?.posts || [],
-                    pagesCount: res?.data?.pagesCount
+                    pagesCount: res?.data?.pagesCount,
+                    deleteId: null
                 });
             });
     }
@@ -32,11 +33,20 @@ class List extends React.Component {
             </Tooltip>
         );
 
+        const handleDeletePost = async (id) => {
+            this.setState({
+                ...this.state,
+                deleteId: id
+            });
+            await deletePost(id);
+            window.location.reload(true);
+        }
+
         const { posts, pagesCount } = this.state;
         return typeof posts === 'undefined'
             ? ( <Spinner className="mt-4" animation="border"/>)
             : (
-            <Container>
+            <Container className="mx-5" style={{width: "auto"}} fluid>
                 <Row>
                     <Button className="my-4" variant="primary" href="posts/create">Create new post</Button>
                 </Row>
@@ -51,6 +61,7 @@ class List extends React.Component {
                             <th>Date</th>
                             <th>Updated</th>
                             <th/>
+                            <th/>
                         </tr>
                         </thead>
                         <tbody>
@@ -63,7 +74,7 @@ class List extends React.Component {
                                <tr key={post.id}>
                                 <td className="align-middle">{post.id}</td>
                                 <td className="align-middle">{post.title}</td>
-                                <td className="w-50 align-middle">{postDescription}</td>
+                                <td className="align-middle">{postDescription}</td>
                                 <td className="align-middle">
                                     <OverlayTrigger
                                         placement="right"
@@ -78,7 +89,19 @@ class List extends React.Component {
                                 <td className="align-middle">
                                     <Button href={"posts/" + post.id + "/edit"} variant="outline-primary">
                                         Edit
-                                    </Button></td>
+                                    </Button>
+                                </td>
+                                   <td className="align-middle">
+                                       <Button onClick={() => handleDeletePost(post.id)}
+                                               variant="outline-danger"
+                                               disabled={this.state.deleteId === post.id}
+                                       >
+                                           { this.state.deleteId === post.id
+                                               ? (<Spinner animation="border" size="sm" />)
+                                               : 'Delete'
+                                           }
+                                       </Button>
+                                   </td>
                             </tr>)
                         })}
                         </tbody>

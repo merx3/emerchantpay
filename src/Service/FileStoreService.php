@@ -29,10 +29,27 @@ class FileStoreService implements ServiceInterface
         return $relativePath;
     }
 
+    public function delete($relativePath)
+    {
+        $relativePath = $this->removeImageDirFromPath($relativePath);
+        $fileLocation = realpath($this->storePath . DIRECTORY_SEPARATOR . $relativePath);
+
+        return unlink($fileLocation);
+    }
+
     private function makeDir($dir)
     {
         if (!file_exists($dir)) {
             mkdir($dir, 0700);
         }
+    }
+
+    private function removeImageDirFromPath($path)
+    {
+        $pathParts = explode('/', $path);
+        array_shift($pathParts);
+        array_shift($pathParts);
+
+        return implode('/', $pathParts);
     }
 }
